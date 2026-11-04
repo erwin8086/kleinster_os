@@ -41,6 +41,7 @@ put_str:
 	or %al, %al
 	jz .finish16
 	int $0x10
+	cli
 	inc %si
 	jmp .loop
 
@@ -103,6 +104,7 @@ read_sector:
 	mov .drv, %dx
 	mov $sector_buffer, %bx
 	int $0x13
+	cli
 
 	mov %cr0, %eax
 	or $1, %eax
