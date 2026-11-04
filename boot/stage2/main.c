@@ -1,6 +1,7 @@
 #include "types.h"
 #include "bios.h"
 #include "elf.h"
+#include "memory.h"
 
 extern uint8_t drive;
 extern uint8_t sector_buffer[512];
@@ -248,13 +249,19 @@ int loadelf(int file)
 
 }
 
-void exec_kernel(void);
+void exec_kernel(uint32_t);
+
+struct bootinfo boot_info;
 
 void main(void)
 {
 	uint16_t *bootsig = (uint16_t*) (sector_buffer+510);
 	put_str("Hello World!\r\nBootdrive = ");
 	put_hex(drive);
+	print_map();
+	set_bootinfo(&boot_info);
+	boot_info.ident = 0xB0;
+	boot_info.boot_drive = drive;
 	initfat();
 	put_str("\r\nKERNEL.ELF = ");
 	int file = fatfind("KERNEL  ELF");
@@ -265,7 +272,7 @@ void main(void)
 		loadelf(file);
 		put_str("OK\r\nEntry = ");
 		put_hex(kernel_entry);
-		exec_kernel();
+		exec_kernel(((uint32_t)&boot_info)-0x1000);
 	}
 	while(1) {
 		asm("cli\nhlt");

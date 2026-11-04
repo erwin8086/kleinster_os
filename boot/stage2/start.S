@@ -89,6 +89,9 @@ _start:
 
 .global exec_kernel
 exec_kernel:
+	mov %esp, %ebp
+	mov 4(%ebp), %ebx
+
 	lgdt gdtr_kern
 	mov $0x10, %ax
 	mov %ax, %ds

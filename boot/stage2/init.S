@@ -2,6 +2,7 @@
 .code16
 .global _entry
 .extern _start
+.extern _get_memory_map
 .global drive
 _entry:
 	mov %cs, %ax
@@ -14,6 +15,7 @@ _entry:
 	xor %eax, %eax
 	mov %eax, %ebp
 	mov %dl, drive
+	call _get_memory_map
 	jmp _start
 
 drive:

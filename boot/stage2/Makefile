@@ -1,7 +1,7 @@
 CC=i686-linux-musl-gcc
 LD=i686-linux-musl-ld
 FLAGS=-nostdinc -g -fno-PIC
-CFLAGS=$(FLAGS) -m32 -march=i386
+CFLAGS=$(FLAGS) -m32 -march=i386 -I../include
 ASFLAGS=$(FLAGS)
 LDFLAGS=-nostdlib -no-pie
 HEADERS=$(wildcard *.h)
@@ -23,7 +23,7 @@ kernel.elf: kernel.o
 stage2.sys: stage2.elf
 	$(OBJCOPY) -O binary $< $@
 
-stage2.elf: init.o gdt.o start.o main.o bios.o
+stage2.elf: init.o gdt.o start.o main.o bios.o memory.o bios_memory.o
 	$(LD) $(LDFLAGS) -Tstage2.ld $^
 
 %.o: %.c $(HEADERS)
