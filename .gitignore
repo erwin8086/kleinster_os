@@ -1,0 +1,9 @@
+**/*.o
+**/*.elf
+**/a.out
+**/*.img
+**/*.bin
+**/bochsout.txt
+**/*.sys
+**/*.bak
+.git*
