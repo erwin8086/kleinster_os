@@ -34,6 +34,20 @@ void put_dec(uint32_t d)
 	put_str(c+1);
 }
 
+static char *suff = "BKMGT";
+
+void put_dec_format(uint32_t d)
+{
+	int s = 0;
+	while(d > 1024)
+	{
+		d /= 1024;
+		s++;
+	}
+	put_dec(d);
+	put_char(suff[s]);
+}
+
 void put_oct(uint32_t o)
 {
 	char buffer[12];
@@ -84,6 +98,9 @@ void printf(char *format, ...)
 					break;
 				case 'c':
 					put_char(va_arg(ap, uint32_t));
+					break;
+				case 'f':
+					put_dec_format(va_arg(ap, uint32_t));
 					break;
 				default:
 					put_char('%');

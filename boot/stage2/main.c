@@ -272,7 +272,7 @@ void main(void)
 		loadelf(file);
 		put_str("OK\r\nEntry = ");
 		put_hex(kernel_entry);
-		exec_kernel(((uint32_t)&boot_info)-0x1000);
+		exec_kernel(((uint32_t)&boot_info)+0x10000);
 	}
 	while(1) {
 		asm("cli\nhlt");

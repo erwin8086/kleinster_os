@@ -1,13 +1,13 @@
 CROSS=i686-linux-musl
-OBJS=start.o main.o console.o print.o memory.o
+OBJS=start.o main.o console.o print.o memory.o pmm.o
 CC=$(CROSS)-gcc
 LD=$(CROSS)-ld
 OBJCOPY=$(CROSS)-objcopy
-FLAGS=-nostdinc -I../boot/include -Iinclude
+FLAGS=-nostdinc -I../boot/include -Iinclude -march=i386 -g
 CFLAGS=$(FLAGS)
 ASFLAGS=$(FLAGS)
-LDFLAGS=-nostdlib
-HEADERS=include/types.h include/console.h include/print.h include/memory.h
+LDFLAGS=-nostdlib -g
+HEADERS=include/types.h include/console.h include/print.h include/memory.h include/pmm.h
 
 all: clean floppy.img
 
